@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaTerra AI — Climate-Smart Agriculture for Africa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #10B981;
+            --deep-green: #047857;
+            --lime: #84CC16;
+            --cyan: #06B6D4;
+            --emerald: #34D399;
+            --forest: #064E3B;
+            --sand: #FEF3C7;
+            --earth: #92400E;
+            --sky: #0EA5E9;
+            --white: #FFFFFF;
+            --off-white: #F9FAFB;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-900: #0F172A;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-dark);
+            background: var(--off-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(2.5rem, 7vw, 5.5rem); }
+        h2 { font-size: clamp(2rem, 5vw, 4rem); }
+        h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float-particle 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--lime), transparent);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, var(--cyan), transparent);
+            top: 70%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, var(--emerald), transparent);
+            top: 40%;
+            left: 60%;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, var(--primary-green), transparent);
+            top: 80%;
+            left: 20%;
+            animation-delay: 9s;
+        }
+
+        @keyframes float-particle {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.4;
+            }
+            50% { 
+                transform: translate(50px, -50px) scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 100px;
+            padding: 0.4rem;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .lang-btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            border-radius: 100px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: white;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 100px;
+            padding: 1rem 2.5rem;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), var(--lime));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-green);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0F172A 0%, #064E3B 50%, #047857 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(132, 204, 22, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(52, 211, 153, 0.15) 0%, transparent 50%);
+            animation: gradient-shift 15s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: grid-flow 20s linear infinite;
+        }
+
+        @keyframes grid-flow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .hero-content {
+            max-width: 1300px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: hero-fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes hero-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 2rem;
+            animation: hero-fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--lime);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero-badge-text {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .hero h1 {
+            color: white;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #34D399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: hero-fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+        }
+
+        .hero-tagline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            animation: hero-fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: hero-fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+        }
+
+        .btn {
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Outfit', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: white;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            justify-content: center;
+            margin-top: 5rem;
+            flex-wrap: wrap;
+            animation: hero-fade-in 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--lime), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(132, 204, 22, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 100px;
+            color: var(--primary-green);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--gray-50);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--lime));
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .problem-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .problem-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            display: block;
+            filter: grayscale(0.3);
+        }
+
+        .problem-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .problem-card p {
+            color: var(--text-light);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: white;
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .solution-visual {
+            position: relative;
+            min-height: 500px;
+            background: linear-gradient(135deg, var(--primary-green), var(--deep-green));
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
+        }
+
+        .solution-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(132, 204, 22, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(52, 211, 153, 0.3) 0%, transparent 50%);
+            animation: solution-glow 8s ease-in-out infinite;
+        }
+
+        @keyframes solution-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .solution-icon-grid {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            padding: 2rem;
+            gap: 1rem;
+        }
+
+        .solution-icon {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            animation: float-icon 4s ease-in-out infinite;
+        }
+
+        .solution-icon:nth-child(1) { animation-delay: 0s; }
+        .solution-icon:nth-child(2) { animation-delay: 0.5s; }
+        .solution-icon:nth-child(3) { animation-delay: 1s; }
+        .solution-icon:nth-child(4) { animation-delay: 1.5s; }
+        .solution-icon:nth-child(5) { 
+            animation-delay: 2s;
+            background: rgba(255, 255, 255, 0.25);
+            font-size: 3.5rem;
+        }
+        .solution-icon:nth-child(6) { animation-delay: 2.5s; }
+        .solution-icon:nth-child(7) { animation-delay: 3s; }
+        .solution-icon:nth-child(8) { animation-delay: 3.5s; }
+        .solution-icon:nth-child(9) { animation-delay: 4s; }
+
+        @keyframes float-icon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .solution-text h2 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .solution-text p {
+            color: var(--text-light);
+            font-size: 1.15rem;
+            margin-bottom: 3rem;
+            line-height: 1.9;
+        }
+
+        .solution-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(132, 204, 22, 0.05));
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 700;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-text h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-text p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* Product Section */
+        .product {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(16, 185, 129, 0.2);
+        }
+
+        .product-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--deep-green));
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate-gradient 10s linear infinite;
+        }
+
+        @keyframes rotate-gradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-header h3 {
+            color: white;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-label {
+            color: var(--lime);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-body {
+            padding: 3rem;
+        }
+
+        .product-body ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .product-body li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--text-light);
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-body li:hover {
+            color: var(--primary-green);
+            padding-left: 2.5rem;
+        }
+
+        .product-body li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Impact Metrics */
+        .impact-metrics {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--forest) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-metrics::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(132, 204, 22, 0.1) 0%, transparent 50%);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--lime);
+            box-shadow: 0 20px 60px rgba(132, 204, 22, 0.2);
+        }
+
+        .metric-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 16px rgba(132, 204, 22, 0.5));
+        }
+
+        .metric-number {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--lime), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Market Section */
+        .market {
+            background: white;
+        }
+
+        .market-timeline {
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary-green), var(--lime));
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) {
+            direction: rtl;
+        }
+
+        .timeline-item:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .timeline-phase {
+            background: var(--gray-50);
+            padding: 3rem;
+            border-radius: 24px;
+            position: relative;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .timeline-phase:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .phase-number {
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .timeline-phase h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-phase p {
+            color: var(--text-light);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        /* Traction Section */
+        .traction {
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+        }
+
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .traction-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            border-left: 5px solid var(--primary-green);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .traction-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15);
+        }
+
+        .traction-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .traction-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .traction-card p {
+            color: var(--text-light);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        /* Funding Section */
+        .funding {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--forest) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .funding::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(132, 204, 22, 0.1) 0%, transparent 50%);
+        }
+
+        .funding-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .funding h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .funding-amount {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--lime), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Outfit', sans-serif;
+            margin: 2rem 0;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(132, 204, 22, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(132, 204, 22, 0.8)); }
+        }
+
+        .funding-purpose {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            line-height: 1.9;
+        }
+
+        .funding-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin: 4rem 0;
+        }
+
+        .breakdown-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .breakdown-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--lime);
+        }
+
+        .breakdown-percentage {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--lime), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .breakdown-item h4 {
+            color: white;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .breakdown-item p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: white;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact p {
+            color: var(--text-light);
+            font-size: 1.15rem;
+            margin-bottom: 3rem;
+            line-height: 1.9;
+        }
+
+        .contact-info {
+            background: var(--gray-50);
+            padding: 3rem;
+            border-radius: 32px;
+            margin-top: 3rem;
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .contact-item {
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: scale(1.05);
+        }
+
+        .contact-label {
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.75rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .contact-value {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--lime), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+        }
+
+        /* Bilingual Support */
+        [data-lang="fr"] .en-only,
+        [data-lang="en"] .fr-only {
+            display: none;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            nav {
+                display: none;
+            }
+
+            .solution-content,
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                left: 2rem;
+            }
+
+            .timeline-item:nth-child(even) {
+                direction: ltr;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body data-lang="en">
+
+    <!-- Animated Particles Background -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero" class="en-only">Home</a><a href="#hero" class="fr-only">Accueil</a></li>
+            <li><a href="#solution" class="en-only">Solution</a><a href="#solution" class="fr-only">Solution</a></li>
+            <li><a href="#product" class="en-only">Product</a><a href="#product" class="fr-only">Produit</a></li>
+            <li><a href="#impact" class="en-only">Impact</a><a href="#impact" class="fr-only">Impact</a></li>
+            <li><a href="#funding" class="en-only">Funding</a><a href="#funding" class="fr-only">Financement</a></li>
+            <li><a href="#contact" class="en-only">Contact</a><a href="#contact" class="fr-only">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <div class="hero-badge-dot"></div>
+                <span class="hero-badge-text en-only">🌍 Climate-Tech Innovation for Africa</span>
+                <span class="hero-badge-text fr-only">🌍 Innovation Climate-Tech pour l'Afrique</span>
+            </div>
+
+            <h1 class="en-only">Empowering Farmers<br>with AI Water Intelligence</h1>
+            <h1 class="fr-only">Autonomiser les Agriculteurs<br>avec l'Intelligence Hydrique IA</h1>
+            
+            <p class="hero-tagline en-only">
+                Smart irrigation technology reducing water waste by 40% and increasing yields by 30%<br>
+                across Morocco and beyond — powered by AI, IoT, and satellite intelligence
+            </p>
+            <p class="hero-tagline fr-only">
+                Technologie d'irrigation intelligente réduisant le gaspillage d'eau de 40% et augmentant les rendements de 30%<br>
+                au Maroc et au-delà — propulsée par l'IA, l'IoT et l'intelligence satellite
+            </p>
+
+            <div class="cta-group">
+                <a href="#funding" class="btn btn-primary">
+                    <span class="en-only">💼 Request Investment Deck</span>
+                    <span class="fr-only">💼 Demander le Dossier</span>
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    <span class="en-only">🎯 Book a Demo</span>
+                    <span class="fr-only">🎯 Réserver une Démo</span>
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label en-only">Water Savings</div>
+                    <div class="stat-label fr-only">Économies d'Eau</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30%</div>
+                    <div class="stat-label en-only">Yield Increase</div>
+                    <div class="stat-label fr-only">Hausse Rendements</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2K+</div>
+                    <div class="stat-label en-only">Farmers by 2026</div>
+                    <div class="stat-label fr-only">Agriculteurs en 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem">
+        <div class="section-header">
+            <div class="section-badge en-only">THE CHALLENGE</div>
+            <div class="section-badge fr-only">LE DÉFI</div>
+            <h2 class="en-only">Water Scarcity is<br>Threatening Food Security</h2>
+            <h2 class="fr-only">La Pénurie d'Eau Menace<br>la Sécurité Alimentaire</h2>
+        </div>
+
+        <div class="problem-grid">
+            <div class="problem-card reveal">
+                <span class="problem-icon">💧</span>
+                <h3 class="en-only">Water Crisis</h3>
+                <h3 class="fr-only">Crise de l'Eau</h3>
+                <p class="en-only">Morocco faces severe water stress with agriculture consuming 87% of available water. Traditional irrigation wastes up to 60% through inefficiency.</p>
+                <p class="fr-only">Le Maroc fait face à un stress hydrique sévère, l'agriculture consommant 87% de l'eau disponible. L'irrigation traditionnelle gaspille jusqu'à 60% par inefficacité.</p>
+            </div>
+
+            <div class="problem-card reveal">
+                <span class="problem-icon">🌡️</span>
+                <h3 class="en-only">Climate Volatility</h3>
+                <h3 class="fr-only">Volatilité Climatique</h3>
+                <p class="en-only">Unpredictable rainfall, droughts, and extreme heat are devastating smallholder farms. Farmers lack real-time data to adapt intelligently.</p>
+                <p class="fr-only">Précipitations imprévisibles, sécheresses et chaleurs extrêmes dévastent les petites exploitations. Les agriculteurs manquent de données temps réel pour s'adapter intelligemment.</p>
+            </div>
+
+            <div class="problem-card reveal">
+                <span class="problem-icon">📉</span>
+                <h3 class="en-only">Declining Yields</h3>
+                <h3 class="fr-only">Rendements en Baisse</h3>
+                <p class="en-only">Smallholders produce 80% of Africa's food but operate with outdated tools, losing 30-50% of potential yields to poor irrigation timing.</p>
+                <p class="fr-only">Les petits exploitants produisent 80% de la nourriture africaine mais opèrent avec des outils obsolètes, perdant 30-50% des rendements potentiels.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution">
+        <div class="solution-content">
+            <div class="solution-visual">
+                <div class="solution-icon-grid">
+                    <div class="solution-icon">💧</div>
+                    <div class="solution-icon">🌱</div>
+                    <div class="solution-icon">🛰️</div>
+                    <div class="solution-icon">📡</div>
+                    <div class="solution-icon">🤖</div>
+                    <div class="solution-icon">📊</div>
+                    <div class="solution-icon">☀️</div>
+                    <div class="solution-icon">🌾</div>
+                    <div class="solution-icon">⚡</div>
+                </div>
+            </div>
+
+            <div class="solution-text">
+                <div class="section-badge en-only">OUR SOLUTION</div>
+                <div class="section-badge fr-only">NOTRE SOLUTION</div>
+                <h2 class="en-only">AI-Powered Precision<br>Irrigation for Smallholders</h2>
+                <h2 class="fr-only">Irrigation de Précision<br>Pilotée par l'IA</h2>
+                
+                <p class="en-only">
+                    AquaTerra AI combines IoT soil sensors, satellite weather intelligence, and machine learning to automate irrigation decisions—delivering the right amount of water, at the right time, to maximize yields while conserving resources.
+                </p>
+                <p class="fr-only">
+                    AquaTerra AI combine des capteurs IoT, l'intelligence météorologique satellite et l'apprentissage automatique pour automatiser les décisions d'irrigation—délivrant la bonne quantité d'eau, au bon moment, pour maximiser les rendements tout en préservant les ressources.
+                </p>
+
+                <div class="solution-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">1</div>
+                        <div class="feature-text">
+                            <h4 class="en-only">Real-Time Soil Intelligence</h4>
+                            <h4 class="fr-only">Intelligence du Sol Temps Réel</h4>
+                            <p class="en-only">Solar-powered IoT sensors monitor moisture, temperature, and nutrients 24/7</p>
+                            <p class="fr-only">Capteurs IoT solaires surveillant humidité, température et nutriments 24h/24</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">2</div>
+                        <div class="feature-text">
+                            <h4 class="en-only">Predictive Weather AI</h4>
+                            <h4 class="fr-only">IA Météorologique Prédictive</h4>
+                            <p class="en-only">Hyperlocal forecasts integrated with intelligent irrigation scheduling</p>
+                            <p class="fr-only">Prévisions hyperlocales intégrées à la programmation d'irrigation intelligente</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">3</div>
+                        <div class="feature-text">
+                            <h4 class="en-only">Automated Irrigation</h4>
+                            <h4 class="fr-only">Irrigation Automatisée</h4>
+                            <p class="en-only">Smart valves and drip systems controlled via mobile app or SMS alerts</p>
+                            <p class="fr-only">Vannes intelligentes et systèmes goutte-à-goutte contrôlés par app ou SMS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Section -->
+    <section id="product" class="product">
+        <div class="section-header">
+            <div class="section-badge en-only">TECHNOLOGY STACK</div>
+            <div class="section-badge fr-only">PILE TECHNOLOGIQUE</div>
+            <h2 class="en-only">Hardware + Software<br>Built for African Conditions</h2>
+            <h2 class="fr-only">Matériel + Logiciel<br>Conçus pour l'Afrique</h2>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card reveal">
+                <div class="product-header">
+                    <span class="product-icon">🔧</span>
+                    <div class="product-label en-only">HARDWARE</div>
+                    <div class="product-label fr-only">MATÉRIEL</div>
+                    <h3 class="en-only">Field Sensors & Controllers</h3>
+                    <h3 class="fr-only">Capteurs & Contrôleurs</h3>
+                </div>
+                <div class="product-body">
+                    <ul class="en-only">
+                        <li>Solar-powered IoT soil sensors</li>
+                        <li>LoRaWAN/4G connectivity</li>
+                        <li>Weather-resistant enclosures</li>
+                        <li>Smart irrigation valves</li>
+                        <li>Drip/sprinkler automation kits</li>
+                        <li>5-year warranty, local support</li>
+                    </ul>
+                    <ul class="fr-only">
+                        <li>Capteurs IoT à énergie solaire</li>
+                        <li>Connectivité LoRaWAN/4G</li>
+                        <li>Boîtiers résistants intempéries</li>
+                        <li>Vannes d'irrigation intelligentes</li>
+                        <li>Kits automatisation goutte-à-goutte</li>
+                        <li>Garantie 5 ans, support local</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-card reveal">
+                <div class="product-header">
+                    <span class="product-icon">💻</span>
+                    <div class="product-label en-only">SOFTWARE</div>
+                    <div class="product-label fr-only">LOGICIEL</div>
+                    <h3 class="en-only">AquaTerra AI Platform</h3>
+                    <h3 class="fr-only">Plateforme AquaTerra AI</h3>
+                </div>
+                <div class="product-body">
+                    <ul class="en-only">
+                        <li>AI irrigation scheduling engine</li>
+                        <li>Mobile app (iOS/Android/USSD)</li>
+                        <li>Crop-specific water models</li>
+                        <li>Real-time alerts & recommendations</li>
+                        <li>Historical analytics dashboard</li>
+                        <li>Multilingual (Arabic/French/Berber)</li>
+                    </ul>
+                    <ul class="fr-only">
+                        <li>Moteur IA de planification irrigation</li>
+                        <li>Application mobile (iOS/Android/USSD)</li>
+                        <li>Modèles hydriques par culture</li>
+                        <li>Alertes et recommandations temps réel</li>
+                        <li>Tableau de bord analytique historique</li>
+                        <li>Multilingue (Arabe/Français/Berbère)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Metrics Section -->
+    <section id="impact" class="impact-metrics">
+        <div class="section-header">
+            <div class="section-badge" style="background: rgba(132, 204, 22, 0.2); border-color: var(--lime);">
+                <span class="en-only">PROVEN IMPACT</span>
+                <span class="fr-only">IMPACT PROUVÉ</span>
+            </div>
+            <h2 style="color: white;" class="en-only">Measurable Results<br>from Pilot Programs</h2>
+            <h2 style="color: white;" class="fr-only">Résultats Mesurables<br>des Programmes Pilotes</h2>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card reveal">
+                <div class="metric-icon">💧</div>
+                <div class="metric-number">40%</div>
+                <div class="metric-label en-only">Water Savings</div>
+                <div class="metric-label fr-only">Économies d'Eau</div>
+            </div>
+
+            <div class="metric-card reveal">
+                <div class="metric-icon">🌾</div>
+                <div class="metric-number">30%</div>
+                <div class="metric-label en-only">Yield Increase</div>
+                <div class="metric-label fr-only">Augmentation Rendements</div>
+            </div>
+
+            <div class="metric-card reveal">
+                <div class="metric-icon">👨‍🌾</div>
+                <div class="metric-number">500+</div>
+                <div class="metric-label en-only">Farmers Served (Pilot)</div>
+                <div class="metric-label fr-only">Agriculteurs Servis (Pilote)</div>
+            </div>
+
+            <div class="metric-card reveal">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-number">2,000+</div>
+                <div class="metric-label en-only">Target by Year 3</div>
+                <div class="metric-label fr-only">Objectif Année 3</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Section -->
+    <section id="market" class="market">
+        <div class="section-header">
+            <div class="section-badge">
+                <span class="en-only">MARKET STRATEGY</span>
+                <span class="fr-only">STRATÉGIE MARCHÉ</span>
+            </div>
+            <h2 class="en-only">Morocco First,<br>Africa Next</h2>
+            <h2 class="fr-only">Le Maroc d'Abord,<br>l'Afrique Ensuite</h2>
+        </div>
+
+        <div class="market-timeline">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-phase reveal">
+                    <div class="phase-number">1</div>
+                    <h3 class="en-only">Phase 1: Morocco (2025-2026)</h3>
+                    <h3 class="fr-only">Phase 1 : Maroc (2025-2026)</h3>
+                    <p class="en-only">Deploy across Marrakech-Safi, Souss-Massa, and Fès-Meknès regions. Partner with cooperatives and government programs. Serve 2,000+ smallholders.</p>
+                    <p class="fr-only">Déploiement dans les régions de Marrakech-Safi, Souss-Massa et Fès-Meknès. Partenariats avec coopératives et programmes gouvernementaux. Servir 2 000+ petits agriculteurs.</p>
+                </div>
+                <div class="timeline-phase reveal">
+                    <div class="phase-number">2</div>
+                    <h3 class="en-only">Phase 2: North Africa (2027)</h3>
+                    <h3 class="fr-only">Phase 2 : Afrique du Nord (2027)</h3>
+                    <p class="en-only">Expand to Tunisia, Algeria, Egypt. Localize models for arid Mediterranean climates. Target 10,000 farmers across region.</p>
+                    <p class="fr-only">Expansion en Tunisie, Algérie, Égypte. Localisation des modèles pour climats méditerranéens arides. Cibler 10 000 agriculteurs dans la région.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-phase reveal">
+                    <div class="phase-number">3</div>
+                    <h3 class="en-only">Phase 3: Sub-Saharan (2028+)</h3>
+                    <h3 class="fr-only">Phase 3 : Subsaharien (2028+)</h3>
+                    <p class="en-only">Enter Kenya, Nigeria, Senegal markets. Adapt to tropical and savanna climates. Scale to 50,000+ farmers by 2030.</p>
+                    <p class="fr-only">Entrée sur les marchés du Kenya, Nigeria, Sénégal. Adaptation aux climats tropicaux et de savane. Passage à 50 000+ agriculteurs d'ici 2030.</p>
+                </div>
+                <div class="timeline-phase reveal">
+                    <div class="phase-number">💰</div>
+                    <h3 class="en-only">Revenue Model</h3>
+                    <h3 class="fr-only">Modèle de Revenus</h3>
+                    <p class="en-only">Hardware sales + SaaS subscriptions ($8-15/month). Government contracts. Carbon credit revenue sharing. B2B agribusiness partnerships.</p>
+                    <p class="fr-only">Ventes matériel + abonnements SaaS (8-15$/mois). Contrats gouvernementaux. Partage revenus crédits carbone. Partenariats B2B agro-industriels.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traction Section -->
+    <section id="traction" class="traction">
+        <div class="section-header">
+            <div class="section-badge">
+                <span class="en-only">PROGRESS TO DATE</span>
+                <span class="fr-only">PROGRÈS À CE JOUR</span>
+            </div>
+            <h2 class="en-only">Validated Technology,<br>Growing Partnerships</h2>
+            <h2 class="fr-only">Technologie Validée,<br>Partenariats Croissants</h2>
+        </div>
+
+        <div class="traction-grid">
+            <div class="traction-card reveal">
+                <span class="traction-icon">🚀</span>
+                <h4 class="en-only">Pilot Success</h4>
+                <h4 class="fr-only">Succès du Pilote</h4>
+                <p class="en-only">Completed 12-month pilot with 500 farmers in Marrakech-Safi region. Demonstrated 38% average water reduction and 27% yield increase across tomatoes, olives, and citrus crops.</p>
+                <p class="fr-only">Pilote de 12 mois complété avec 500 agriculteurs dans la région Marrakech-Safi. Démonstration de 38% de réduction d'eau moyenne et 27% d'augmentation des rendements pour tomates, olives et agrumes.</p>
+            </div>
+
+            <div class="traction-card reveal">
+                <span class="traction-icon">🤝</span>
+                <h4 class="en-only">Strategic Partnerships</h4>
+                <h4 class="fr-only">Partenariats Stratégiques</h4>
+                <p class="en-only">MoU signed with Morocco's Ministry of Agriculture. Partnership discussions underway with USAID, FAO, and African Development Bank for scaling programs.</p>
+                <p class="fr-only">Protocole d'accord signé avec le Ministère de l'Agriculture du Maroc. Discussions de partenariat en cours avec l'USAID, la FAO et la Banque Africaine de Développement.</p>
+            </div>
+
+            <div class="traction-card reveal">
+                <span class="traction-icon">🏆</span>
+                <h4 class="en-only">Recognition</h4>
+                <h4 class="fr-only">Reconnaissance</h4>
+                <p class="en-only">Winner of Morocco Climate Tech Award 2024. Selected for Google for Startups Accelerator Africa. Featured in TechCrunch Africa and African Business Magazine.</p>
+                <p class="fr-only">Lauréat du Prix Morocco Climate Tech 2024. Sélectionné pour Google for Startups Accelerator Africa. Présenté dans TechCrunch Africa et African Business Magazine.</p>
+            </div>
+
+            <div class="traction-card reveal">
+                <span class="traction-icon">💰</span>
+                <h4 class="en-only">Early Revenue</h4>
+                <h4 class="fr-only">Revenus Initiaux</h4>
+                <p class="en-only">$180K ARR from pilot subscriptions. $500K pipeline in government and cooperative contracts for 2025-2026 deployment phase.</p>
+                <p class="fr-only">180K$ ARR des abonnements pilotes. Pipeline de 500K$ en contrats gouvernementaux et coopératives pour la phase de déploiement 2025-2026.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Section -->
+    <section id="funding" class="funding">
+        <div class="funding-content">
+            <div class="section-badge" style="background: rgba(132, 204, 22, 0.2); border-color: var(--lime);">
+                <span class="en-only">INVESTMENT OPPORTUNITY</span>
+                <span class="fr-only">OPPORTUNITÉ D'INVESTISSEMENT</span>
+            </div>
+            <h2 class="en-only">Raising Seed Round</h2>
+            <h2 class="fr-only">Levée de Fonds d'Amorçage</h2>
+            
+            <div class="funding-amount">$2.5M</div>
+            
+            <p class="funding-purpose en-only">
+                To scale hardware production, expand field operations across Morocco, build out our data science team, and establish partnerships with government programs and agricultural cooperatives.
+            </p>
+            <p class="funding-purpose fr-only">
+                Pour augmenter la production de matériel, étendre les opérations sur le terrain au Maroc, renforcer notre équipe de data science et établir des partenariats avec les programmes gouvernementaux et coopératives agricoles.
+            </p>
+
+            <div class="funding-breakdown">
+                <div class="breakdown-item reveal">
+                    <div class="breakdown-percentage">35%</div>
+                    <h4 class="en-only">Hardware Manufacturing</h4>
+                    <h4 class="fr-only">Fabrication Matériel</h4>
+                    <p class="en-only">Supply chain & production scale</p>
+                    <p class="fr-only">Chaîne d'approvisionnement & montée en production</p>
+                </div>
+                <div class="breakdown-item reveal">
+                    <div class="breakdown-percentage">30%</div>
+                    <h4 class="en-only">Field Operations</h4>
+                    <h4 class="fr-only">Opérations Terrain</h4>
+                    <p class="en-only">Farmer onboarding & support</p>
+                    <p class="fr-only">Intégration & support agriculteurs</p>
+                </div>
+                <div class="breakdown-item reveal">
+                    <div class="breakdown-percentage">25%</div>
+                    <h4 class="en-only">Technology & AI</h4>
+                    <h4 class="fr-only">Technologie & IA</h4>
+                    <p class="en-only">Platform development & data science</p>
+                    <p class="fr-only">Développement plateforme & data science</p>
+                </div>
+                <div class="breakdown-item reveal">
+                    <div class="breakdown-percentage">10%</div>
+                    <h4 class="en-only">Marketing</h4>
+                    <h4 class="fr-only">Marketing</h4>
+                    <p class="en-only">Partnerships & awareness</p>
+                    <p class="fr-only">Partenariats & notoriété</p>
+                </div>
+            </div>
+
+            <div class="cta-group" style="margin-top: 4rem;">
+                <a href="mailto:invest@aquaterra.ai" class="btn btn-primary">
+                    <span class="en-only">📊 Download Investment Deck</span>
+                    <span class="fr-only">📊 Télécharger le Dossier</span>
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    <span class="en-only">📞 Schedule Call</span>
+                    <span class="fr-only">📞 Planifier un Appel</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <div class="section-badge">
+                <span class="en-only">GET IN TOUCH</span>
+                <span class="fr-only">CONTACTEZ-NOUS</span>
+            </div>
+            <h2 class="en-only">Let's Build Climate-Resilient<br>Agriculture Together</h2>
+            <h2 class="fr-only">Construisons Ensemble une<br>Agriculture Résiliente au Climat</h2>
+            
+            <p class="en-only">
+                Whether you're an impact investor, government agency, NGO, or agricultural cooperative—we'd love to explore how we can work together to transform African agriculture.
+            </p>
+            <p class="fr-only">
+                Que vous soyez investisseur à impact, agence gouvernementale, ONG ou coopérative agricole—nous serions ravis d'explorer comment travailler ensemble pour transformer l'agriculture africaine.
+            </p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">EMAIL</div>
+                    <div class="contact-value">contact@aquaterra.ai</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label en-only">PHONE</div>
+                    <div class="contact-label fr-only">TÉLÉPHONE</div>
+                    <div class="contact-value">+212 5XX-XXXXXX</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label en-only">HEADQUARTERS</div>
+                    <div class="contact-label fr-only">SIÈGE SOCIAL</div>
+                    <div class="contact-value">Marrakech, Morocco</div>
+                </div>
+            </div>
+
+            <div class="cta-group" style="margin-top: 3rem;">
+                <a href="mailto:demo@aquaterra.ai" class="btn btn-primary">
+                    <span class="en-only">🌱 Request a Pilot Demo</span>
+                    <span class="fr-only">🌱 Demander une Démo Pilote</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">AquaTerra AI</div>
+            <p class="en-only">© 2025 AquaTerra AI. Empowering African agriculture through climate-smart innovation.<br>Building a water-secure future, one farm at a time.</p>
+            <p class="fr-only">© 2025 AquaTerra AI. Autonomiser l'agriculture africaine par l'innovation climatique intelligente.<br>Construire un avenir sécurisé en eau, une ferme à la fois.</p>
+        </div>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.body.setAttribute('data-lang', lang);
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all reveal elements
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
+
+</body>
+</html>
